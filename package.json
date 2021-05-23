@@ -1,0 +1,23 @@
+{
+  "name": "zenn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yosh1/zenn.git"
+  },
+  "keywords": [],
+  "author": "Yoshihisa Kaino <yoppy1125yoppy@gmail.com> (https://github.com/yoshi1125hisa)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yosh1/zenn/issues"
+  },
+  "homepage": "https://github.com/yosh1/zenn#readme",
+  "dependencies": {
+    "zenn-cli": "^0.1.80"
+  }
+}
