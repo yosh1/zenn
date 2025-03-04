@@ -1,9 +1,9 @@
 ---
 
-title: "『browser-use-webui』で始めるブラウザ操作の自動化入門"  
+title: "browser-use-webuiで始めるブラウザ操作の自動化入門"  
 emoji: "🖥️"  
 type: "tech"  
-topics: ["Python", "自動化", "AIツール", "ブラウザ操作"]  
+topics: ["AIエージェント", "AI", "Python", "自動化", "ブラウザ操作"]  
 published: true  
 
 ---
