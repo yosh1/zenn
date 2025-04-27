@@ -41,7 +41,7 @@ published: true
    - メール配信の信頼性を確保します。
    - 配信状況を監視します。
 
-![システム構成図のイメージ（テキストでの代替）](フロー図： Google Groups -> 転送 -> Cloudflare Email Routing (カスタムアドレス) -> Cloudflare Worker (メール解析 -> SendGridで自動返信) -> 元の送信者 )
+![システム構成図のイメージ](/images/groups-cf-flow.png)
 
 ## 前提条件
 
