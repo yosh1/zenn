@@ -57,7 +57,7 @@ ReAct パターンで実装したAIエージェントが、自然言語の指示
 
 ## システムアーキテクチャ
 
-![AIOプレス システムアーキテクチャ](/images/aiopress-architecture.svg)
+![AIOプレス システムアーキテクチャ](https://raw.githubusercontent.com/aiosoken/aiopress/main/docs/architecture-diagram.svg)
 
 ### 設計判断
 
@@ -268,5 +268,5 @@ AIに仕事を奪われるのではなく、AIとブランドを一緒に育て�
 
 ---
 
-GitHub: [リポジトリURL]
-チーム: AIO Research Institute
+GitHub: https://github.com/aiosoken/aiopress
+チーム: AIO総研
