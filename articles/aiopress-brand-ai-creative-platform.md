@@ -4,6 +4,7 @@ emoji: "🎨"
 type: "idea"
 topics: ["gch4", "googlecloud", "vertexai", "gemini", "firestore"]
 published: true
+publication_name: "aiosoken"
 ---
 
 ## はじめに
