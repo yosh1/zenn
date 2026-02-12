@@ -111,12 +111,12 @@ Firestore Security Rules でドキュメント単位のアクセスを制御し�
 
 ## 使った Google Cloud プロダクト
 
-### アプリケーション実行（必須要件）
+### アプリケーション実行
 
 - **Cloud Run** ── Firebase App Hosting 経由で Next.js をホスティング
 - **Cloud Functions** ── クリエイティブ生成、画像解析、エージェント処理、フィードバック処理のバックエンドAPI
 
-### AI（必須要件）
+### AI
 
 - **Vertex AI - Gemini 2.0 Flash** ── テキスト生成、ブランドフィットスコア算出、フィードバック分析、エージェントの推論エンジン
 - **Vertex AI - Imagen 3** ── ブランドの世界観を反映した画像生成
