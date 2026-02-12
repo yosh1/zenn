@@ -28,7 +28,7 @@ AIOプレスというWebアプリを作りました。ブランドのDNA──�
 
 ## アーキテクチャ
 
-![AIOプレス システムアーキテクチャ](https://raw.githubusercontent.com/aiosoken/aiopress/main/docs/architecture-diagram.svg)
+![AIOプレス システムアーキテクチャ](/images/aiopress-architecture.svg)
 
 フロントエンドは Next.js の App Router で、バックエンドは Cloud Functions。AI周りは Vertex AI に寄せていて、テキスト生成に Gemini 2.0 Flash、画像生成に Imagen 3、アセット分析に Cloud Vision API を使っています。データは Firestore、ファイルは Cloud Storage、認証は Firebase Authentication。全部サーバーレスなので、使った分だけ課金される構成です。
 
