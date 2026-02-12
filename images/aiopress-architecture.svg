@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 920" font-family="'Helvetica Neue', Arial, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif">
+  <defs>
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="112%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#1a237e" flood-opacity="0.08"/>
+    </filter>
+    <filter id="shadowSm" x="-2%" y="-2%" width="104%" height="110%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7" fill="#90a4ae"/>
+    </marker>
+    <marker id="arrowDash" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7" fill="#7e57c2"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="920" fill="#fafbfc" rx="16"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="1200" height="56" rx="16" fill="#1a73e8"/>
+  <rect x="0" y="28" width="1200" height="28" fill="#1a73e8"/>
+  <text x="600" y="36" text-anchor="middle" font-size="20" font-weight="700" fill="#fff" letter-spacing="0.5">AIOプレス ── システムアーキテクチャ</text>
+
+  <!-- ===== LAYER 1: User ===== -->
+  <rect x="410" y="78" width="380" height="54" rx="27" fill="#fff" stroke="#1a73e8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="540" y="102" text-anchor="middle" font-size="11" fill="#5f6368">Browser</text>
+  <text x="540" y="118" text-anchor="middle" font-size="14" font-weight="600" fill="#202124">ユーザー</text>
+  <text x="720" y="110" text-anchor="middle" font-size="11" fill="#5f6368">マーケティング担当者</text>
+
+  <!-- Arrow -->
+  <line x1="600" y1="132" x2="600" y2="156" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Firebase Auth pill -->
+  <rect x="470" y="160" width="260" height="36" rx="18" fill="#e8f0fe" stroke="#4285f4" stroke-width="1.5"/>
+  <text x="600" y="183" text-anchor="middle" font-size="13" font-weight="600" fill="#1a73e8">Firebase Authentication</text>
+  <text x="600" y="183" text-anchor="middle" font-size="13" font-weight="600" fill="#1a73e8">Firebase Authentication</text>
+
+  <!-- Arrow -->
+  <line x1="600" y1="196" x2="600" y2="224" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===== LAYER 2: Frontend ===== -->
+  <rect x="60" y="224" width="1080" height="185" rx="14" fill="#e8f0fe" stroke="#a8c7fa" stroke-width="1" filter="url(#shadow)"/>
+  <!-- Header -->
+  <rect x="60" y="224" width="1080" height="38" rx="14" fill="#4285f4"/>
+  <rect x="60" y="248" width="1080" height="14" fill="#4285f4"/>
+  <text x="600" y="249" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">フロントエンド ── Next.js 16 on Firebase App Hosting（Cloud Run）</text>
+
+  <!-- Feature cards -->
+  <rect x="88" y="276" width="230" height="64" rx="10" fill="#fff" stroke="#c2d9fc" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="203" y="300" text-anchor="middle" font-size="13" font-weight="700" fill="#1967d2">Brand DNA 設定</text>
+  <text x="203" y="318" text-anchor="middle" font-size="11" fill="#5f6368">ミッション・ビジョン・トーン定義</text>
+
+  <rect x="338" y="276" width="230" height="64" rx="10" fill="#fff" stroke="#c2d9fc" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="453" y="300" text-anchor="middle" font-size="13" font-weight="700" fill="#1967d2">クリエイティブ生成</text>
+  <text x="453" y="318" text-anchor="middle" font-size="11" fill="#5f6368">コピー・SNS・ブログ・画像</text>
+
+  <rect x="588" y="276" width="230" height="64" rx="10" fill="#fff" stroke="#c2d9fc" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="703" y="300" text-anchor="middle" font-size="13" font-weight="700" fill="#1967d2">フィードバック</text>
+  <text x="703" y="318" text-anchor="middle" font-size="11" fill="#5f6368">チャット形式の改善ループ</text>
+
+  <rect x="838" y="276" width="270" height="64" rx="10" fill="#fff" stroke="#c2d9fc" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="973" y="300" text-anchor="middle" font-size="13" font-weight="700" fill="#1967d2">アセット・分析</text>
+  <text x="973" y="318" text-anchor="middle" font-size="11" fill="#5f6368">画像管理・ダッシュボード</text>
+
+  <!-- Tech pills -->
+  <rect x="88" y="356" width="76" height="24" rx="12" fill="#d2e3fc"/>
+  <text x="126" y="373" text-anchor="middle" font-size="11" font-weight="600" fill="#1967d2">React 19</text>
+  <rect x="172" y="356" width="92" height="24" rx="12" fill="#d2e3fc"/>
+  <text x="218" y="373" text-anchor="middle" font-size="11" font-weight="600" fill="#1967d2">Tailwind CSS</text>
+  <rect x="272" y="356" width="84" height="24" rx="12" fill="#d2e3fc"/>
+  <text x="314" y="373" text-anchor="middle" font-size="11" font-weight="600" fill="#1967d2">shadcn/ui</text>
+  <rect x="364" y="356" width="56" height="24" rx="12" fill="#d2e3fc"/>
+  <text x="392" y="373" text-anchor="middle" font-size="11" font-weight="600" fill="#1967d2">Zod</text>
+  <rect x="428" y="356" width="80" height="24" rx="12" fill="#d2e3fc"/>
+  <text x="468" y="373" text-anchor="middle" font-size="11" font-weight="600" fill="#1967d2">Recharts</text>
+
+  <text x="88" y="400" font-size="11" fill="#80868b">Radix UI ベースのコンポーネント / App Router サーバーコンポーネント活用</text>
+
+  <!-- Arrows frontend → backend -->
+  <line x1="300" y1="409" x2="300" y2="448" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="600" y1="409" x2="600" y2="448" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="900" y1="409" x2="900" y2="448" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===== LAYER 3: Backend ===== -->
+  <rect x="60" y="448" width="1080" height="148" rx="14" fill="#e6f4ea" stroke="#a8dab5" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="60" y="448" width="1080" height="38" rx="14" fill="#34a853"/>
+  <rect x="60" y="472" width="1080" height="14" fill="#34a853"/>
+  <text x="600" y="473" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">バックエンド ── Cloud Functions for Firebase（Node.js 20）</text>
+
+  <!-- Function cards -->
+  <rect x="80" y="498" width="185" height="52" rx="8" fill="#fff" stroke="#a8dab5" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="172" y="519" text-anchor="middle" font-size="12" font-weight="700" fill="#137333">creatives</text>
+  <text x="172" y="536" text-anchor="middle" font-size="11" fill="#5f6368">テキスト・画像生成</text>
+
+  <rect x="280" y="498" width="185" height="52" rx="8" fill="#fff" stroke="#a8dab5" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="372" y="519" text-anchor="middle" font-size="12" font-weight="700" fill="#137333">feedback</text>
+  <text x="372" y="536" text-anchor="middle" font-size="11" fill="#5f6368">AI改善ループ</text>
+
+  <rect x="480" y="498" width="185" height="52" rx="8" fill="#fff" stroke="#a8dab5" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="572" y="519" text-anchor="middle" font-size="12" font-weight="700" fill="#137333">presentations</text>
+  <text x="572" y="536" text-anchor="middle" font-size="11" fill="#5f6368">PPTX スライド生成</text>
+
+  <rect x="680" y="498" width="185" height="52" rx="8" fill="#fff" stroke="#a8dab5" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="772" y="519" text-anchor="middle" font-size="12" font-weight="700" fill="#137333">assets</text>
+  <text x="772" y="536" text-anchor="middle" font-size="11" fill="#5f6368">Cloud Vision 解析</text>
+
+  <rect x="880" y="498" width="230" height="52" rx="8" fill="#fff" stroke="#a8dab5" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="995" y="519" text-anchor="middle" font-size="12" font-weight="700" fill="#137333">brand / members</text>
+  <text x="995" y="536" text-anchor="middle" font-size="11" fill="#5f6368">ブランド・権限管理</text>
+
+  <text x="88" y="580" font-size="11" fill="#80868b">全エンドポイントで Firebase Auth トークン検証 / Firestore Security Rules でドキュメントレベル制御</text>
+
+  <!-- Arrows backend → services -->
+  <line x1="300" y1="596" x2="300" y2="640" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="550" y1="596" x2="550" y2="640" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="900" y1="596" x2="900" y2="640" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===== LAYER 4 LEFT: AI Services ===== -->
+  <rect x="60" y="640" width="620" height="130" rx="14" fill="#fce8e6" stroke="#f5b7b1" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="60" y="640" width="620" height="38" rx="14" fill="#ea4335"/>
+  <rect x="60" y="664" width="620" height="14" fill="#ea4335"/>
+  <text x="370" y="665" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Google Cloud AI サービス</text>
+
+  <!-- AI cards -->
+  <rect x="80" y="688" width="185" height="66" rx="8" fill="#fff" stroke="#f5b7b1" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="172" y="708" text-anchor="middle" font-size="11" font-weight="600" fill="#c5221f">Vertex AI</text>
+  <text x="172" y="726" text-anchor="middle" font-size="13" font-weight="700" fill="#202124">Gemini 2.0 Flash</text>
+  <text x="172" y="744" text-anchor="middle" font-size="11" fill="#5f6368">テキスト生成・スコア算出</text>
+
+  <rect x="280" y="688" width="185" height="66" rx="8" fill="#fff" stroke="#f5b7b1" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="372" y="708" text-anchor="middle" font-size="11" font-weight="600" fill="#c5221f">Vertex AI</text>
+  <text x="372" y="726" text-anchor="middle" font-size="13" font-weight="700" fill="#202124">Imagen 3</text>
+  <text x="372" y="744" text-anchor="middle" font-size="11" fill="#5f6368">ブランド画像生成</text>
+
+  <rect x="480" y="688" width="185" height="66" rx="8" fill="#fff" stroke="#f5b7b1" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="572" y="712" text-anchor="middle" font-size="13" font-weight="700" fill="#202124">Cloud Vision API</text>
+  <text x="572" y="734" text-anchor="middle" font-size="11" fill="#5f6368">アセット特性抽出・解析</text>
+
+  <!-- ===== LAYER 4 RIGHT: Data ===== -->
+  <rect x="700" y="640" width="440" height="130" rx="14" fill="#fef7e0" stroke="#fdd663" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="700" y="640" width="440" height="38" rx="14" fill="#fbbc04"/>
+  <rect x="700" y="664" width="440" height="14" fill="#fbbc04"/>
+  <text x="920" y="665" text-anchor="middle" font-size="14" font-weight="700" fill="#202124">データ・ストレージ</text>
+
+  <!-- Data cards -->
+  <rect x="720" y="688" width="195" height="66" rx="8" fill="#fff" stroke="#fdd663" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="817" y="712" text-anchor="middle" font-size="13" font-weight="700" fill="#202124">Cloud Firestore</text>
+  <text x="817" y="734" text-anchor="middle" font-size="11" fill="#5f6368">ブランドDNA・クリエイティブ</text>
+
+  <rect x="930" y="688" width="195" height="66" rx="8" fill="#fff" stroke="#fdd663" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="1027" y="712" text-anchor="middle" font-size="13" font-weight="700" fill="#202124">Cloud Storage</text>
+  <text x="1027" y="734" text-anchor="middle" font-size="11" fill="#5f6368">画像・アセットファイル</text>
+
+  <!-- ===== External: Epson Connect ===== -->
+  <rect x="60" y="800" width="240" height="52" rx="26" fill="#f3e8fd" stroke="#b39ddb" stroke-width="1.5" filter="url(#shadowSm)"/>
+  <text x="180" y="822" text-anchor="middle" font-size="13" font-weight="600" fill="#6a1b9a">Epson Connect API</text>
+  <text x="180" y="840" text-anchor="middle" font-size="11" fill="#5f6368">物理印刷出力</text>
+
+  <!-- Dashed arrow to Epson -->
+  <path d="M160,596 L160,800" stroke="#7e57c2" stroke-width="1.5" stroke-dasharray="8,4" fill="none" marker-end="url(#arrowDash)"/>
+
+  <!-- ===== Legend ===== -->
+  <rect x="700" y="794" width="440" height="108" rx="12" fill="#fff" stroke="#dadce0" stroke-width="1" filter="url(#shadowSm)"/>
+  <text x="724" y="818" font-size="13" font-weight="700" fill="#202124">凡例</text>
+
+  <rect x="724" y="830" width="16" height="16" rx="4" fill="#4285f4"/>
+  <text x="748" y="844" font-size="12" fill="#3c4043">フロントエンド（Cloud Run）</text>
+
+  <rect x="724" y="856" width="16" height="16" rx="4" fill="#34a853"/>
+  <text x="748" y="870" font-size="12" fill="#3c4043">バックエンド（Cloud Functions）</text>
+
+  <rect x="930" y="830" width="16" height="16" rx="4" fill="#ea4335"/>
+  <text x="954" y="844" font-size="12" fill="#3c4043">AI サービス</text>
+
+  <rect x="930" y="856" width="16" height="16" rx="4" fill="#fbbc04"/>
+  <text x="954" y="870" font-size="12" fill="#3c4043">データ層</text>
+
+  <line x1="724" y1="888" x2="760" y2="888" stroke="#90a4ae" stroke-width="2"/>
+  <text x="768" y="892" font-size="11" fill="#80868b">データフロー</text>
+  <line x1="860" y1="888" x2="896" y2="888" stroke="#7e57c2" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <text x="904" y="892" font-size="11" fill="#80868b">外部連携</text>
+</svg>
