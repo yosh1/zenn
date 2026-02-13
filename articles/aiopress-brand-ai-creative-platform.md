@@ -37,7 +37,7 @@ publication_name: "aiosoken"
 
 ## デモ動画
 
-@[youtube](YOUR_VIDEO_ID_HERE)
+@[youtube](l38BnRGFYVI)
 
 ## システムアーキテクチャ
 
