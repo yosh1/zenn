@@ -4,6 +4,7 @@ emoji: "🚀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["litellm", "langfuse", "llm", "vultr", "cloudflare"]
 published: true
+publication_name: "preferred"
 ---
 
 ## はじめに
