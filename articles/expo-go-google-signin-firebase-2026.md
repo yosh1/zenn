@@ -4,6 +4,7 @@ emoji: "🔐"
 type: "tech"
 topics: ["expo", "reactnative", "firebase", "google", "oauth"]
 published: true
+publication_name: "preferred"
 ---
 
 Expo Go で Google サインインを実装しようとして、半日溶かした記録と解決策です。

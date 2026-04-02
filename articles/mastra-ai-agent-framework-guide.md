@@ -5,6 +5,7 @@ emoji: ":desktop_computer:"
 type: "tech" 
 topics: ["AIエージェント", "AI", "Mastra", "TypeScript", "Node.js"]
 published: true
+publication_name: "preferred"
 
 ---
 
