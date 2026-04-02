@@ -1,43 +1,55 @@
 ---
-title: "LiteLLM × Langfuse を最安・安定で構築する（Vultr + Cloudflare）"
+title: "LiteLLM × Langfuse を安く安定して動かす構成（VPS + Cloudflare）"
 emoji: "🚀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["litellm", "langfuse", "llm", "vultr", "cloudflare"]
-published: false
+published: true
 ---
 
 ## はじめに
 
-LLM アプリケーションの開発において、プロンプトの管理やコスト計算、トレースを行うためのオブザーバビリティツールは必須になりつつあります。その中でも **LiteLLM** と **Langfuse** の組み合わせは非常に強力です。
+LLM アプリを運用し始めると、プロンプトの管理やコスト計算、トレースの仕組みがすぐに欲しくなります。**LiteLLM** と **Langfuse** の組み合わせはそのあたりをうまくカバーしてくれるのですが、Langfuse v3 から ClickHouse が必須になったことで、セルフホストのハードルが一気に上がりました。メモリ不足（OOM）で落ちる、再起動を繰り返す——そんな運用地獄に片足を突っ込んだ末にたどり着いた構成をまとめます。
 
-しかし、Langfuse v3 から分析基盤として ClickHouse が必須となり、これをセルフホストしようとするとメモリ不足（OOM）で頻繁にクラッシュする「運用地獄」に陥りがちです。
+方針はシンプルで、**「まともに動いて、かつ安い」** ことだけを優先しています。
 
-そこで本記事では、**「まともに動かし、かつ最安で動作させる」** ことを目的とした、実務レベルで使えるハイブリッド構成の構築手順をまとめます。
-
-## 結論：推奨構成（月額約6,000円）
+## 結論：推奨構成（月額 ¥3,000〜6,000）
 
 | コンポーネント | サービス | プラン・スペック | 月額コスト |
 |---|---|---|---|
-| **Langfuse** | Langfuse Cloud | Hobby プラン（マネージド） | **$0** (¥0) |
-| **LiteLLM** | Vultr (東京) | 4 vCPU / 8 GB RAM | **$40** (約 ¥6,000) |
-| **DNS / SSL** | Cloudflare | Free プラン | **$0** (¥0) |
+| **Langfuse** | Langfuse Cloud | Hobby プラン（マネージド） | ¥0 |
+| **LiteLLM** | 国内 VPS（東京リージョン） | 4 vCPU / 8 GB RAM | ¥3,000〜6,000 |
+| **DNS / SSL** | Cloudflare | Free プラン | ¥0 |
 
-**なぜこの構成なのか？**
-1. **Langfuse は公式クラウドに任せる**: ClickHouse の運用負荷をゼロにし、安定稼働を担保。
-2. **LiteLLM は東京リージョンの VPS**: LLM API へのリクエストを中継するため、遅延（レイテンシ）を最小限に抑えるには日本国内のサーバーが必須。Vultr はクレカのみで即時利用でき、コスパも良好。
-3. **Cloudflare + Caddy で簡単 HTTPS 化**: 独自ドメインを割り当て、セキュアなエンドポイントを構築。
+**なぜこの構成にしたか**
+
+最初は Langfuse も VPS にセルフホストしようとしました。が、Langfuse v3 は ClickHouse を内包していて、まともに動かすにはメモリが 8GB でもギリギリ。LiteLLM + PostgreSQL + Redis と同居させるとすぐ OOM で落ちます。ClickHouse だけ別サーバーに分ける手もありますが、月額が倍になる上に運用の手間も増える。
+
+であれば、Langfuse は公式の Hobby プラン（無料）に任せて ClickHouse の運用をゼロにし、LiteLLM だけ東京リージョンの VPS に置くのが一番割りに合います。LLM API へのプロキシなのでレイテンシは気にしたい。国内サーバーは外せません。HTTPS は Cloudflare の DNS + Caddy の自動証明書で十分です。
+
+### VPS はどこでもいい
+
+この記事では Vultr を使っていますが、Docker が動く東京リージョンの VPS なら何でも大丈夫です。むしろコスト重視なら国産 VPS のほうが安いです。
+
+| サービス | 8GB RAM プラン | 月額目安 |
+|---|---|---|
+| Xserver VPS | 4 vCPU / 8 GB | 約 ¥3,000〜 |
+| ConoHa VPS | 4 vCPU / 8 GB | 約 ¥4,000〜 |
+| さくらの VPS | 4 vCPU / 8 GB | 約 ¥5,000〜 |
+| Vultr (東京) | 4 vCPU / 8 GB | 約 ¥6,000 |
+
+自分が Vultr を使ったのは、たまたまアカウントを持っていたからです。今から始めるなら Xserver VPS あたりが半額で済むので、そっちのほうがいいと思います。手順は Ubuntu + Docker が入ればどれも同じです。
 
 ---
 
 ## 構築手順
 
-### 1. Vultr でサーバーを立ち上げる
+### 1. VPS でサーバーを立ち上げる
 
-Vultr のコンソールから以下のスペックでサーバーを作成します。
+以下は Vultr の例ですが、他の VPS でも Ubuntu + Docker が使えれば同じ手順で進められます。
 
-- **Location**: Tokyo
+- **Location**: Tokyo（国内リージョン）
 - **Image**: Ubuntu 24.04 LTS
-- **Plan**: Cloud Compute (Shared CPU) -> 4 vCPU / 8 GB RAM ($40/mo)
+- **Plan**: 4 vCPU / 8 GB RAM 以上
 - **Additional Features**: Auto Backups 等はすべて OFF（節約のため）
 
 ### 2. Cloudflare で DNS レコードを追加
@@ -161,7 +173,7 @@ docker compose up -d
 
 ### 6. ファイアウォール（UFW）の設定
 
-Vultr のデフォルトでは UFW が有効になっており、SSH（22）しか通しません。Caddy の HTTPS 化には **ポート 80 と 443** が必要です。ここを忘れると Let's Encrypt の ACME チャレンジがタイムアウトして、証明書が一生取れません。
+Vultr はデフォルトで UFW が有効になっていて、SSH（22）しか通していません。Caddy で HTTPS 化するには **ポート 80 と 443** を開ける必要があります。ここを忘れると Let's Encrypt の ACME チャレンジがタイムアウトして、証明書が一生取れません。
 
 ```bash
 ufw allow 80/tcp
@@ -171,7 +183,7 @@ ufw status
 
 ### 7. Caddy で HTTPS 化
 
-Nginx よりも設定が簡単な Caddy を使って、自動で SSL 証明書を取得・更新させます。
+Nginx でもいいですが、Caddy のほうが設定が圧倒的に短い。SSL 証明書の取得・更新も勝手にやってくれます。
 
 ```bash
 # Caddy インストール
@@ -222,6 +234,6 @@ Cloudflare の Proxy を有効（オレンジ雲）にすると、Let's Encrypt 
 
 ## まとめ
 
-この構成であれば、月額約6,000円で **「日本国内の低遅延エンドポイント」** と **「マネージドで安定した Langfuse 分析基盤」** の両方を手に入れることができます。
+月額約6,000円で、東京リージョンの低遅延プロキシと安定した Langfuse の分析基盤が手に入ります。ClickHouse の面倒を見なくていいだけで、運用のストレスがだいぶ減りました。
 
-将来的にリクエスト数が増えて Langfuse Cloud の無料枠を超えた場合は、Langfuse 側だけを有料プランにアップグレードするか、別の強力なサーバーにセルフホスト版を立てて `.env` の `LANGFUSE_HOST` を書き換えるだけで簡単に移行可能です。
+リクエストが増えて Langfuse Cloud の無料枠を超えたら、有料プランに上げるか、別サーバーにセルフホスト版を立てて `.env` の `LANGFUSE_HOST` を書き換えるだけ。LiteLLM 側は何も変えなくていいので、移行もスムーズです。
