@@ -1,6 +1,6 @@
 ---
 
-title: "自分のコミットの39%がClaudeとの共著だった。数えるツールを作って公開した"
+title: "GitHubプロフィールにAIとの開発量を貼れるツールを作ってみた"
 emoji: "🤝"
 type: "tech"
 topics: ["ClaudeCode", "GitHub", "GitHubActions", "AI", "OSS"]
@@ -12,6 +12,8 @@ published: true
 
 Claude Code を毎日使っています。でも「どれくらい使っているか」と聞かれても、体感でしか答えられませんでした。
 
+GitHub のプロフィールには、コミット数もスター数も草も出ます。でも「そのコードを誰と書いたか」は、どこにも出ていない。
+
 数えてみたら、こうでした。
 
 ```console
@@ -19,7 +21,7 @@ $ git log --format='%b' | grep -c 'Co-Authored-By: Claude'
 960
 ```
 
-このリポジトリ、1,107コミット中960件。**87%がClaudeとの共著**でした。
+このリポジトリ、1,107コミット中960件。**87%がClaudeと一緒に書いたコミット**でした。
 
 全リポジトリ横断で数えたら **26,198コミット中10,223件、39%**。この数字が思ったより大きくて、プロフィールに出したくなったので、ツールを作って公開しました。
 
@@ -54,8 +56,8 @@ https://github.com/yosh1/cocommit
 GitHub の Search Commits API で、こう叩けます。
 
 ```console
-$ gh api '/search/commits?q=author:yosh1+co-authored-by:claude&per_page=1' --jq '.total_count'
-10223
+$ gh api '/search/commits?q=author:yosh1+co-authored-by:noreply@anthropic.com&per_page=1' --jq '.total_count'
+10228
 ```
 
 動きます。が、**公式ドキュメントのどこにも書かれていません**。
@@ -64,10 +66,10 @@ $ gh api '/search/commits?q=author:yosh1+co-authored-by:claude&per_page=1' --jq 
 
 | クエリ | total_count |
 |---|---|
-| `co-authored-by:noreply@anthropic.com` | 10,203 |
+| `co-authored-by:noreply@anthropic.com` | 10,228 |
 | `co-authored-by:copilot@github.com` | **29** |
 | `zzznotaqualifier:noreply@anthropic.com`（存在しない修飾子） | **0** |
-| 修飾子なし | 26,184 |
+| 修飾子なし | 26,206 |
 
 存在しない修飾子は 0 を返す。値を変えれば結果も変わる。**パーサに認識されている**ことは確かです。
 
@@ -79,7 +81,7 @@ $ gh api '/search/commits?q=author:yosh1+co-authored-by:claude&per_page=1' --jq 
 const unusable = (n) => n === 0 || n >= total;
 ```
 
-「0件になる」だけでなく「**総数と同じ値が返る**」ケースを潰すのが重要でした。後者を見逃すと、フィルタが効いていないのに「共著率100%！」と誇らしげに表示してしまいます。検知したら `"Co-Authored-By: Claude"` の全文検索にフォールバックします。
+「0件になる」だけでなく「**総数と同じ値が返る**」ケースを潰すのが重要でした。後者を見逃すと、フィルタが効いていないのに「AI率100%！」と誇らしげに表示してしまいます。検知したら `"Co-Authored-By: Claude"` の全文検索にフォールバックします。
 
 ### 2. private が数えられないと、数字が意味を失う
 
@@ -93,9 +95,9 @@ $ gh api '/search/commits?q=author:yosh1+is:public' --jq '.total_count'
 5687    # public のみ
 ```
 
-共著コミットで見ると、この差はもっと極端です。
+AIと書いたコミットで見ると、この差はもっと極端です。
 
-| 範囲 | 共著 | 全体 | 比率 |
+| 範囲 | AIと書いた | 全体 | 比率 |
 |---|---|---|---|
 | private含む | 10,223 | 26,198 | **39%** |
 | public のみ | 124 | 5,687 | **2%** |
@@ -194,7 +196,7 @@ private を数えても、カードに出るのは「10,223 / 26,198・39%」と
 
 12ヶ月のグラフを見ると、2025年10月は42件だったのが、2026年9月は2,022件。**48倍**です。
 
-しかも直近月は共著率が80%を超えている。自分の開発のやり方が1年で別物になったことが、体感ではなく数字で出てきました。
+しかも直近月は80%を超えている。自分の開発のやり方が1年で別物になったことが、体感ではなく数字で出てきました。
 
 作ってよかったのは、ツールそのものより**この事実が見えたこと**かもしれません。
 
@@ -204,4 +206,25 @@ private を数えても、カードに出るのは「10,223 / 26,198・39%」と
 
 https://github.com/yosh1/cocommit
 
-他のAIエージェントのトレーラ（Cursor、Devin など）も、`AGENTS` に数行足すだけで対応できる作りにしてあります。「このエージェントも数えたい」があれば Issue か PR をください。
+`--agent` で9種類に対応しています。Claude / Copilot / Cursor / Codex / Devin / Gemini / Jules / Aider / Amp。
+
+```console
+$ npx github:yosh1/cocommit --agent cursor --user your-login
+```
+
+追加するときに一点だけ気をつけたことがあります。**エージェントは名前ではなくメールアドレスで引く**ようにしました。名前で引くと同名の他人を巻き込むからです。実際 `co-authored-by:claude` で引くと、Claude とは無関係な人間の共著者が混ざったコミットが出てきました。
+
+なので9件とも、実際の公開コミットからトレーラを読んで確認しています。
+
+```
+Co-authored-by: Cursor <cursoragent@cursor.com>
+Co-authored-by: aider (anthropic/claude-sonnet-5) <aider@aider.chat>
+```
+
+Aider のように「使ったモデル名が表示名に入る」ものもあるので、アドレスで引く判断は結果的に正解でした。
+
+まだ入っていないエージェントがあれば、こちらで自分のトレーラを調べて Issue をもらえれば追加します。
+
+```console
+$ git log --format='%b' | grep -i co-authored | sort -u
+```
